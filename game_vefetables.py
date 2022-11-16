@@ -1,18 +1,13 @@
-#!/usr/bin/python
 import cv2
 from cvzone.FaceMeshModule import FaceMeshDetector as Fd
 import os
 import random
 import cvzone
 
-# Laptop-Bety
-# cap = cv2.VideoCapture(2, cv2.CAP_DSHOW) #DroidCam
-# cap = cv2.VideoCapture(1) #WebCam
-# cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-# cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-
-# PC-Nefo
-cap = cv2.VideoCapture(0)
+# imput the ID camera
+    # PC-Nefo - 0
+    # Laptop-Bety - 2
+cap = cv2.VideoCapture(2)
 cap.set(3, 1280)
 cap.set(4, 720)
 
