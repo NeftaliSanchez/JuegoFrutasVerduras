@@ -1,41 +1,38 @@
-#!/usr/bin/python
 import cv2
 from cvzone.FaceMeshModule import FaceMeshDetector as Fd
 import os
 import random
 import cvzone
+from select_camera import screenVideo 
 
-# imput the ID camera
-    # PC-Nefo - 0
-    # Laptop-Bety - 2
-cap = cv2.VideoCapture(2)
+cap = screenVideo()
 cap.set(3, 1280)
 cap.set(4, 720)
 
 
 detector = Fd(maxFaces=1)
 
-# import images
+# detect path
 absolutepath = os.path.abspath(__file__)
-# print(absolutepath)
 fileDirectory = os.path.dirname(absolutepath)
-# print(fileDirectory)
+
+# import fruits
 folderEatable = f'{fileDirectory}\\Objects\\eatable\\fruits'
-# print(folderEatable)
 listEatable = os.listdir(folderEatable)
 eatables = []
 for object in listEatable:
     eatables.append(cv2.imread(f'{folderEatable}/{object}', cv2.IMREAD_UNCHANGED))
 
+# import noneatable
 folderNonEatable = f'{fileDirectory}\\Objects\\noneatable'
 listNonEatable = os.listdir(folderNonEatable)
 nonEatables = []
 for object in listNonEatable:
     nonEatables.append(cv2.imread(f'{folderNonEatable}/{object}', cv2.IMREAD_UNCHANGED))
 
-currentObject = eatables[0]
-pos = [300, 0]
-speed = 15
+currentObject = eatables[0] #use the firts vegetable
+pos = [300, 0] # first non-random position
+speed = 8
 count = 0
 global isEatable
 isEatable = True
@@ -45,18 +42,17 @@ def resetObject():
     global isEatable
     pos[0] = random.randint(100, 1000)
     pos[1] = 0
-    randNo = random.randint(0, 2)  # change the ratio of eatables/ non-eatables
+    randNo = random.randint(0, 2)
     if randNo == 0:
         currentObject = nonEatables[random.randint(0, 3)]
         isEatable = False
     else:
         currentObject = eatables[random.randint(0, 7)]
         isEatable = True
-    # print(currentObject)
     return currentObject
 
+idList = [0,17,78,292] ## mouth detection
 
-idList = [0,17,78,292]
 while True:
     success, img = cap.read()
     img = cv2.flip(img,1)
@@ -115,11 +111,11 @@ while True:
     cv2.imshow("Image", img)
     key = cv2.waitKey(1)
 
-    if key == ord('r'):
+    if key == ord('r'): ## reset the game
         resetObject()
         gameOver = False
         count = 0
         currentObject = eatables[0]
         isEatable = True
-    elif key == ord('q'):
+    elif key == ord('q'): ## quit the game
         break
