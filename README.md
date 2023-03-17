@@ -5,7 +5,7 @@ Hola! El juego utliza Open-CV para detectar el rostro, en específico la boca. C
 El juego está dirigido para niños con necesidades educativas especiales. La velocidad lenta de la caida de los objetos permite que el niño pueda nombrar el objeto que esta cayendo y posteriormente "comerla".
 
 ## Como instalar
-El proyecto se encurntra bajo la versió 3.10.10 de Python
+El proyecto se encuentra bajo la versió 3.10.10 de Python
 Sigue los siguientes pasos para poder utilizarla
 
 * instalar la librería customtkinter. Utilizando  ❯ pip install customtkinter
