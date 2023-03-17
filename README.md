@@ -9,7 +9,7 @@ El proyecto se encuentra bajo la versió 3.10.10 de Python
 Sigue los siguientes pasos para poder utilizarla
 
 * instalar la librería customtkinter. Utilizando  ❯ pip install customtkinter
-* Se deberá crear un entorno vitual.
+* Crear un entorno vitual en el proyecto.
 * Iniciar el entorno virtual e instalar las librerias que se encuentran en el archivo "requirements.txt". Utilizando ❯ pip install -r requirements.txt
 
 
