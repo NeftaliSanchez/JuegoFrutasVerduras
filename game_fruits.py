@@ -13,8 +13,8 @@ cap.set(4, 720)
 detector = Fd(maxFaces=1)
 
 # detect path
-absolutepath = os.path.abspath(__file__)
-fileDirectory = os.path.dirname(absolutepath)
+abspath = os.path.abspath(__file__)
+fileDirectory = os.path.dirname(abspath)
 
 # import fruits
 folderEatable = f'{fileDirectory}\\Objects\\eatable\\fruits'
@@ -69,42 +69,30 @@ while True:
 
         if faces:
             face = faces[0]
-            # for idNo,point in enumerate(face):
-            #     cv2.putText(img,str(idNo),point,cv2.FONT_HERSHEY_COMPLEX,0.7,(255,0,255),1)
 
             up = face[idList[0]]
             down = face[idList[1]]
 
             for id in idList:
                 cv2.circle(img, face[id], 1, (255, 0, 255), 5)
-            # cv2.line(img, up, down, (0, 255, 0), 3)
-            # cv2.line(img, face[idList[2]], face[idList[3]], (0, 255, 0), 3)
 
             upDown, _ = detector.findDistance(face[idList[0]], face[idList[1]])
             leftRight, _ = detector.findDistance(face[idList[2]], face[idList[3]])
 
             ## Distance of the Object
             cx, cy = (up[0] + down[0]) // 2, (up[1] + down[1]) // 2
-            # cv2.line(img, (cx, cy), (pos[0] + 50, pos[1] + 50), (0, 255, 0), 3)
             distMouthObject, _ = detector.findDistance((cx, cy), (pos[0] + 50, pos[1] + 50))
-            # print(distMouthObject)
 
-            # Lip opened or closed
+            # opened or closed ratio
             ratio = int((upDown / leftRight) * 100)
-            # print(ratio)
-            # if ratio > 60:
-            #     mouthStatus = "Abierta"
-            # else:
-            #     mouthStatus = "Cerrada"
-            # cv2.putText(img, mouthStatus, (50, 50), cv2.FONT_HERSHEY_COMPLEX, 2, (255, 0, 255), 2)
-
+            #
             if distMouthObject < 100 and ratio > 60:
                 if isEatable:
                     currentObject = resetObject()
                     count += 1
                 else:
                     gameOver = True
-        cv2.putText(img, str(count), (1100, 50), cv2.FONT_HERSHEY_COMPLEX, 2, (255, 0, 255), 5)
+        cv2.putText(img, str(count), (50, 50), cv2.FONT_HERSHEY_COMPLEX, 2, (255, 0, 255), 5)
     else:
         cv2.putText(img, "Fin del juego", (300, 400), cv2.FONT_HERSHEY_PLAIN, 7, (255, 0, 255), 10)
 

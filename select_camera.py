@@ -10,7 +10,7 @@ def screenVideo():
     # if you have troveled shotting your camera, then
     # you'd need to change the number at cv2.VideoCapture(X)
 
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(2)
     return cap
 
 def main():
