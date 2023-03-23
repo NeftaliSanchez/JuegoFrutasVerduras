@@ -29,6 +29,6 @@ Primero se debe ejecutar el archivo "main.pyw" y abrirá una ventana como la sig
 donde podremos seleccionar si queremos jugar con frutas o verduras. Despues de seleccionar la opción deseada, el juego comenzará.
 
  ## NOTAS
-El juego aun se encuentra en fase de desarrollo, por lo que la configuración de la camara esta sujeta al equipo en que se prueba el script. En caso de tener problemas, se debera cambiar el número de camara en "select_camera.py".
+El juego aun se encuentra en fase de desarrollo, por lo que la configuración de la camara esta sujeta al equipo en que se utiliza el script. En caso de tener problemas, se debera cambiar el número de camara en "select_camera.py".
 
 Actualmente, la velocidad de la caida de los objetos es por defecto, a una velocidad lenta. 
