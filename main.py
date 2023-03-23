@@ -1,6 +1,5 @@
-#!/usr/bin/python
 import customtkinter
-import os
+import runpy
 
 customtkinter.set_appearance_mode("System")  # Modes: system (default), light, dark
 customtkinter.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
@@ -8,23 +7,13 @@ customtkinter.set_default_color_theme("blue")  # Themes: blue (default), dark-bl
 app = customtkinter.CTk()  # create CTk window like you do with the Tk window
 app.geometry("400x240")
 
+
 def run_fruits():
-    run_game('fruits')
+    runpy.run_module("game_fruits")
+    
 
 def run_vegetables():
-    run_game('vegetables')
-
-def run_game(chosse: str) -> None:
-    absolutepath = os.path.abspath(__file__)
-    # print(absolutepath)
-    fileDirectory = os.path.dirname(absolutepath)
-    # print(fileDirectory)
-    rpython = f'{fileDirectory}\\env\\Scripts\\python.exe'
-    if chosse == 'fruits': 
-        fgame = f'{fileDirectory}\\game_fruits.py'
-    elif chosse == 'vegetables':
-        fgame = f'{fileDirectory}\\game_vefetables.py'
-    os.system(rpython +' '+ fgame)
+    runpy.run_module("game_vefetables")
 
 
 btnFruits = customtkinter.CTkButton(master=app, text="Frutas",command=run_fruits)

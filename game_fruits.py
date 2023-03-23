@@ -6,9 +6,9 @@ import cvzone
 from select_camera import screenVideo 
 
 cap = screenVideo()
-cap.set(3, 1280)
-cap.set(4, 720)
-
+width  = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+print(width, height)
 
 detector = Fd(maxFaces=1)
 
@@ -40,7 +40,7 @@ gameOver = False
 
 def resetObject():
     global isEatable
-    pos[0] = random.randint(100, 1000)
+    pos[0] = random.randint(50, width-50)
     pos[1] = 0
     randNo = random.randint(0, 2)
     if randNo == 0:
@@ -55,7 +55,7 @@ idList = [0,17,78,292] ## mouth detection
 
 while True:
     success, img = cap.read()
-    img = cv2.flip(img,1)
+    # img = cv2.flip(img,1)
 
     if gameOver is False:
         img, faces = detector.findFaceMesh(img, draw=False)
@@ -64,7 +64,7 @@ while True:
         pos[1] += speed
         # print(pos[0],pos[1])
 
-        if pos[1] > 600:
+        if pos[1] > height-150:
             currentObject = resetObject()
 
         if faces:
@@ -107,3 +107,4 @@ while True:
         isEatable = True
     elif key == ord('q'): ## quit the game
         break
+cv2.destroyAllWindows()
