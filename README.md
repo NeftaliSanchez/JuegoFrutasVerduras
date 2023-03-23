@@ -30,7 +30,7 @@ donde podremos seleccionar si queremos jugar con frutas o verduras. Despues de s
 
  ## NOTAS
 - El juego aun se encuentra en fase de desarrollo, por lo que la configuración de la camara esta sujeta al equipo en que se utiliza el script. En caso de tener problemas, se debera cambiar el número de camara en "select_camera.py". 
-  Por defecto se tiene la camara 0, pero podrias tratar cambiando el valor a 1 o 2. 
+  Por defecto se tiene la camara 0, como se muestra en la imagen de abajo, pero podrias tratar cambiando el valor a 1 o 2. 
   
   ![image](https://user-images.githubusercontent.com/104779576/227344143-434583b6-c4b3-4ff3-80a9-9fecf74835b6.png)
 
