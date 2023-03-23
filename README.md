@@ -11,8 +11,8 @@ El proyecto se encuentra bajo la versió 3.10 de Python.
 Sigue los siguientes pasos para poder utilizarlo
 
 * Clona el repositorio 
-* Crear un entorno vitual en el proyecto.
-* Iniciar el entorno virtual e instalar las librerias que se encuentran en el archivo "requirements.txt". Utilizando
+* Crear un entorno vitual en el proyecto e iniciarlo (se puede omitir este paso).
+* Instalar las librerias que se encuentran en el archivo "requirements.txt". Utilizando
 
   ```
   pip install -r requirements.txt

@@ -64,7 +64,7 @@ while True:
         pos[1] += speed
         # print(pos[0],pos[1])
 
-        if pos[1] > height-150:
+        if pos[1] > height-175:
             currentObject = resetObject()
 
         if faces:
@@ -94,7 +94,7 @@ while True:
                     gameOver = True
         cv2.putText(img, str(count), (50, 50), cv2.FONT_HERSHEY_COMPLEX, 2, (255, 0, 255), 5)
     else:
-        cv2.putText(img, "Fin del juego", (300, 400), cv2.FONT_HERSHEY_PLAIN, 7, (255, 0, 255), 10)
+        cv2.putText(img, "Fin del juego", (int(width/4), int(height/2)), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 5)
 
     cv2.imshow("Image", img)
     key = cv2.waitKey(1)
