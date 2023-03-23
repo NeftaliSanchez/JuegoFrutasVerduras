@@ -27,6 +27,7 @@ Primero se debe ejecutar el archivo "juego.pyw" y abrirá una ventana como la si
 donde podremos seleccionar si queremos jugar con frutas o verduras. Despues de seleccionar la opción deseada, el juego comenzará.
 
   ** Con la tecla R del teclado reiniciamos el juego, es decir, el contador regresa a 0.
+  
   ** Para salir del juego presionamos la tecla Q del teclado.
 
  ## NOTAS
