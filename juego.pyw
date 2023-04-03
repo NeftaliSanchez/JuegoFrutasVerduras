@@ -3,9 +3,7 @@ import os
 abspath = os.path.abspath(__file__)
 fileDirectory = os.path.dirname(abspath)
 
-try:
-    rpython = f'{fileDirectory}\\env\\Scripts\\python.exe'
-    fgame = f'{fileDirectory}\\main.py'
-    os.system(rpython+' '+fgame)
-except:
+rpython = f'{fileDirectory}\\env\\Scripts\\python.exe'
+fgame = f'{fileDirectory}\\main.py'
+if os.system(rpython+' '+fgame) != 0:
     os.system("py"+' '+fgame)
