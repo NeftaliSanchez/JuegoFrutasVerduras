@@ -1,6 +1,5 @@
 import cv2
 from cvzone.FaceMeshModule import FaceMeshDetector as Fd
-import os
 import random
 import cvzone
 
@@ -52,11 +51,6 @@ class Game:
             self.currentObject = self.eatables[i]
 
             self.isEatable = True
-        
-        # frutas = ["manzana","mango","piña","platano","uva","naranja","sandia","fresa"]
-        # nocomestibles = ["bomba","Laptop","raton","silla"]
-        # if randNo == 0: print(f'no comestible, {nocomestibles[i]}, shape = {np.shape(self.currentObject)}')
-        # else: print(f'comestible, {frutas[i]}, shape = {np.shape(self.currentObject)}')
 
     def facesDetect(self):
         self.img,self.faces = self.cap.detector.findFaceMesh(self.img, draw=False)
@@ -65,7 +59,10 @@ class Game:
             self.up = self.face[self.mouthId[0]]
             self.down = self.face[self.mouthId[1]]
             for id in self.mouthId:
-                    cv2.circle(self.img,self.face[id],1,(255, 0, 255),5)                    
+                    if self.ratio is not None:
+                        if self.ratio > 65:
+                            cv2.circle(self.img,self.face[id],1,(124,252,0),2)                    
+                        else: cv2.circle(self.img,self.face[id],1,(255, 0, 255),2)                    
     
     def distance(self):
         if len(self.face) == 0: return
@@ -84,13 +81,13 @@ class Game:
 
     def eat(self):
         if (self.distance is None or self.ratio is None): return
-        if self.distMounthObject<75 and self.ratio > 70:
+        if self.distMounthObject<70 and self.ratio > 65:
             if self.isEatable:
                 self.resetobject()
                 self.count += 1
             else:
                 self.gameOver = True
-                cv2.putText(self.img,"Fin del juego",(int(self.cap.width()/4),int(self.cap.height()/2)),cv2.FONT_HERSHEY_COMPLEX,2,(255, 0, 255),5)
+                cv2.putText(self.img,"Fin del juego",(int(self.cap.width()/4),int(self.cap.height()/2)),cv2.FONT_HERSHEY_COMPLEX,2,(17, 148, 222 ),5)
 
     def loop(self,type: str = "fruits"):
         self.initialize(type=type)
@@ -98,7 +95,7 @@ class Game:
             if self.gameOver is False:
                 try:
                     self.img = self.cap.read()
-                    cv2.putText(self.img,str(self.count),(50,50),cv2.FONT_HERSHEY_COMPLEX,2,(255, 0, 255),5)
+                    cv2.putText(self.img,str(self.count),(10,50),cv2.FONT_HERSHEY_COMPLEX,2,(86, 27, 241 ),5)
                     self.img = cvzone.overlayPNG(self.img,self.currentObject,self.pos)
                 except: pass
                 self.pos[1] += self.speed
