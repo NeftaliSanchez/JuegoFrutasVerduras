@@ -1,7 +1,6 @@
 import cv2
-from cvzone.FaceMeshModule import FaceMeshDetector as Fd
 import random
-import cvzone
+import numpy as np
 
 from objectsimport import ObjectsImport
 from camera import Camera
@@ -20,14 +19,12 @@ class Game:
         self. noneatables = None
         self.img = None
         self.face = []
-        self.faces = []
         self.up = []
         self.down = []
         self.upDown = []
         self.leftRight = None
         self.distMounthObject = None
         self.ratio = None
-        self.key = ""
     
     def initialize(self,type: str = "fruits"):
         self.cap = Camera().start()
@@ -53,9 +50,8 @@ class Game:
             self.isEatable = True
 
     def facesDetect(self):
-        self.img,self.faces = self.cap.detector.findFaceMesh(self.img, draw=False)
-        if self.faces:
-            self.face = self.faces[0]
+        self.face = self.cap.detector.findFace(self.img)
+        if self.face:
             self.up = self.face[self.mouthId[0]]
             self.down = self.face[self.mouthId[1]]
             for id in self.mouthId:
@@ -72,8 +68,8 @@ class Game:
 
     def objectDistance(self):
         if len(self.face) == 0: return
-        cx,cy = (self.up[0]+self.down[0])//2,(self.up[1]+self.down[1])//2
-        self.distMounthObject,_ = self.cap.detector.findDistance((cx,cy),(self.pos[0]+50,self.pos[1]+50))
+        x,y = (self.up[0]+self.down[0])//2,(self.up[1]+self.down[1])//2
+        self.distMounthObject,_ = self.cap.detector.findDistance((x,y),(self.pos[0]+50,self.pos[1]+50))
 
     def isOpen(self):
         if (self.upDown is None or self.leftRight is None): return
@@ -96,7 +92,7 @@ class Game:
                 try:
                     self.img = self.cap.read()
                     cv2.putText(self.img,str(self.count),(10,50),cv2.FONT_HERSHEY_COMPLEX,2,(86, 27, 241 ),5)
-                    self.img = cvzone.overlayPNG(self.img,self.currentObject,self.pos)
+                    self.overlay()
                 except: pass
                 self.pos[1] += self.speed
                 if self.pos[1]>(self.cap.height()-50): self.resetobject()
@@ -106,13 +102,29 @@ class Game:
                 self.isOpen()
                 self.eat()
             cv2.imshow("Image",self.img)
-            self.key = cv2.waitKey(1)
-            if self.key == ord("r"):
+            key = cv2.waitKey(1)
+            if key == ord("r"):
                 self.resetobject()
                 self.gameOver = False
                 self.count = 0
-            elif self.key == ord("q"): break
+            elif key == ord("q"): break
         cv2.destroyAllWindows()
+    
+    def overlay(self):
+        hf, wf, cf = self.currentObject.shape
+        hb, wb, cb = self.img.shape
+        *_, mask = cv2.split(self.currentObject)
+        maskBGRA = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGRA)
+        maskBGR = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
+        imgRGBA = cv2.bitwise_and(self.currentObject, maskBGRA)
+        imgRGB = cv2.cvtColor(imgRGBA, cv2.COLOR_BGRA2BGR)
+        imgMaskFull = np.zeros((hb, wb, cb), np.uint8)
+        imgMaskFull[self.pos[1]:hf + self.pos[1], self.pos[0]:wf + self.pos[0], :] = imgRGB
+        imgMaskFull2 = np.ones((hb, wb, cb), np.uint8) * 255
+        maskBGRInv = cv2.bitwise_not(maskBGR)
+        imgMaskFull2[self.pos[1]:hf + self.pos[1], self.pos[0]:wf + self.pos[0], :] = maskBGRInv
+        self.img = cv2.bitwise_and(self.img, imgMaskFull2)
+        self.img = cv2.bitwise_or(self.img, imgMaskFull)
 
 
 if __name__ == "__main__":

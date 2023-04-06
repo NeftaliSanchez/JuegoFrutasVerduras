@@ -1,6 +1,6 @@
 import cv2
 from threading import Thread
-from cvzone.FaceMeshModule import FaceMeshDetector as Fd
+from detection import Face as Facedetector
 
 
 class Camera:
@@ -8,7 +8,7 @@ class Camera:
         self.cap = None
         self.lastFrame = None
         self.stopped = False
-        self.detector = Fd(maxFaces = 2)
+        self.detector = Facedetector()
     
     def start(self):
         t = Thread(target=self.update, args=())

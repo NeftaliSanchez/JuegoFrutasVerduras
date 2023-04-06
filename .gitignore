@@ -2,6 +2,8 @@ git_ignore_keys.txt
 tempCodeRunnerFile.py
 main.spec
 main2.py
+bodydetection.py
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
