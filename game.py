@@ -62,14 +62,14 @@ class Game:
     
     def distance(self):
         if len(self.face) == 0: return
-        self.upDown,_ = self.cap.detector.findDistance(self.face[self.mouthId[0]],self.face[self.mouthId[1]])
-        self.leftRight,_ = self.cap.detector.findDistance(self.face[self.mouthId[2]],self.face[self.mouthId[3]])
+        self.upDown = self.cap.detector.findDistance(self.face[self.mouthId[0]],self.face[self.mouthId[1]])
+        self.leftRight = self.cap.detector.findDistance(self.face[self.mouthId[2]],self.face[self.mouthId[3]])
         
 
     def objectDistance(self):
         if len(self.face) == 0: return
         x,y = (self.up[0]+self.down[0])//2,(self.up[1]+self.down[1])//2
-        self.distMounthObject,_ = self.cap.detector.findDistance((x,y),(self.pos[0]+50,self.pos[1]+50))
+        self.distMounthObject = self.cap.detector.findDistance((x,y),(self.pos[0]+50,self.pos[1]+50))
 
     def isOpen(self):
         if (self.upDown is None or self.leftRight is None): return
