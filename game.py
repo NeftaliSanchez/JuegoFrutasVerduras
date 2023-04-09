@@ -27,7 +27,6 @@ class Game:
         self.ratio = None
     
     def initialize(self,type: str = "fruits"):
-        self.cap = Camera().start()
         self.eatables = ObjectsImport().importobjects(type=type)
         self.noneatables = ObjectsImport().importobjects()
         while self.img is None:
@@ -49,7 +48,7 @@ class Game:
 
             self.isEatable = True
 
-    def facesDetect(self):
+    def mouthdetection(self):
         self.face = self.cap.detector.findFace(self.img)
         if self.face:
             self.up = self.face[self.mouthId[0]]
@@ -85,8 +84,7 @@ class Game:
                 self.gameOver = True
                 cv2.putText(self.img,"Fin del juego",(int(self.cap.width()/4),int(self.cap.height()/2)),cv2.FONT_HERSHEY_COMPLEX,2,(17, 148, 222 ),5)
 
-    def loop(self,type: str = "fruits"):
-        self.initialize(type=type)
+    def loop(self):
         while True:
             if self.gameOver is False:
                 try:
@@ -96,7 +94,7 @@ class Game:
                 except: pass
                 self.pos[1] += self.speed
                 if self.pos[1]>(self.cap.height()-50): self.resetobject()
-                self.facesDetect()
+                self.mouthdetection()
                 self.distance()
                 self.objectDistance()
                 self.isOpen()
@@ -111,9 +109,9 @@ class Game:
         cv2.destroyAllWindows()
     
     def overlay(self):
-        hf, wf, cf = self.currentObject.shape
-        hb, wb, cb = self.img.shape
-        *_, mask = cv2.split(self.currentObject)
+        hf,wf,_ = self.currentObject.shape
+        hb,wb,cb = self.img.shape
+        *_,mask = cv2.split(self.currentObject)
         maskBGRA = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGRA)
         maskBGR = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
         imgRGBA = cv2.bitwise_and(self.currentObject, maskBGRA)
@@ -126,6 +124,10 @@ class Game:
         self.img = cv2.bitwise_and(self.img, imgMaskFull2)
         self.img = cv2.bitwise_or(self.img, imgMaskFull)
 
+    def probgame(self,type: str = "fruits"):
+        self.cap = Camera().start()
+        self.initialize(type=type)
+        self.loop()
 
 if __name__ == "__main__":
-    game = Game().loop()
+    game = Game().probgame()

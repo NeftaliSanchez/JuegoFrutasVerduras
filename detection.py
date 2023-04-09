@@ -13,9 +13,9 @@ class Face:
         face = []
         if self.results.multi_face_landmarks:
             for faceLandmark in self.results.multi_face_landmarks:
-                for i, lm in enumerate(faceLandmark.landmark):
-                    ih, iw, ic = img.shape
-                    x, y = int(lm.x * iw), int(lm.y * ih)
+                for _,lm in enumerate(faceLandmark.landmark):
+                    ih,iw,_ = img.shape
+                    x,y = int(lm.x * iw), int(lm.y * ih)
                     face.append([x, y])
         return face
 
