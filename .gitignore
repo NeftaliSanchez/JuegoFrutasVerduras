@@ -5,6 +5,9 @@ main2.py
 bodydetection.py
 
 
+main.spec
+main-pyw.spec
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
