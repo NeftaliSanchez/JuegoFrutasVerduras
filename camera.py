@@ -49,7 +49,7 @@ class Camera:
                 img = self.read()
             img = self.read()
             cv2.imshow("Image",img)
-            key = cv2.waitKey(1)
+            key = cv2.waitKey(1) & 0xFF
             if key == ord("q"): break
             if key == ord("f"): self.flip =  not self.flip
         cv2.destroyAllWindows()

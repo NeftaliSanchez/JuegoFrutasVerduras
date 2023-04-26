@@ -6,8 +6,9 @@ from objectsimport import ObjectsImport
 from camera import Camera
 
 class Game:
-    def __init__(self):
-        self.speed = 10
+    def __init__(self,dificult):
+        self.dificult = dificult
+        self.speed = 5
         self.count = 0
         self.isEatable = True
         self.gameOver = False
@@ -80,6 +81,8 @@ class Game:
             if self.isEatable:
                 self.resetobject()
                 self.count += 1
+                if self.dificult == 1: self.speed=self.speed+1
+                elif self.dificult == 2: self.speed=self.speed+self.count
             else:
                 self.gameOver = True
                 cv2.putText(self.img,"Fin del juego",(int(self.cap.width()/4),int(self.cap.height()/2)),cv2.FONT_HERSHEY_COMPLEX,2,(17, 148, 222 ),5)
@@ -100,7 +103,7 @@ class Game:
                 self.isOpen()
                 self.eat()
             cv2.imshow("Image",self.img)
-            key = cv2.waitKey(1)
+            key = cv2.waitKey(1) & 0xFF
             if key == ord("r"):
                 self.resetobject()
                 self.gameOver = False
@@ -130,4 +133,4 @@ class Game:
         self.loop()
 
 if __name__ == "__main__":
-    game = Game().probgame()
+    game = Game(dificult=0).probgame()
