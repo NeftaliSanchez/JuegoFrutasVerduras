@@ -10,6 +10,7 @@ class Camera:
         self.stopped = False
         self.detector = Facedetector()
         self.flip =  bool
+        self.numcamera = 0
     
     def start(self):
         self.flip = False
@@ -20,7 +21,7 @@ class Camera:
     
     def update(self):
         if self.cap is None:
-            self.cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+            self.cap = cv2.VideoCapture(self.numcamera, cv2.CAP_DSHOW)
         while True:
             if self.stopped: return
             (result,image) = self.cap.read()
@@ -43,13 +44,11 @@ class Camera:
         return self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
     
     def config(self):
-        img = None
+        cap = cv2.VideoCapture(self.numcamera)
         while True:
-            while img is None:
-                img = self.read()
-            img = self.read()
-            cv2.imshow("Image",img)
+            success, img = cap.read()
+            cv2.imshow("Image", img)
             key = cv2.waitKey(1) & 0xFF
-            if key == ord("q"): break
+            if key == 27 or not cv2.getWindowProperty("Image", cv2.WND_PROP_VISIBLE): break
             if key == ord("f"): self.flip =  not self.flip
         cv2.destroyAllWindows()

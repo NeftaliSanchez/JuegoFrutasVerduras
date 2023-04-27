@@ -104,6 +104,7 @@ class Game:
                 self.eat()
             cv2.imshow("Image",self.img)
             key = cv2.waitKey(1) & 0xFF
+            if key == 27 or not cv2.getWindowProperty("Image", cv2.WND_PROP_VISIBLE): break
             if key == ord("r"):
                 self.resetobject()
                 self.gameOver = False
