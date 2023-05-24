@@ -60,7 +60,6 @@ class App(customtkinter.CTk):
         super().__init__()
         self.title("Juego de frutas y verduras")
         self.geometry("350x650")
-        self.set_appearance_mode("system")
         self.grid_columnconfigure((1, 1), weight=1)
         self.grid_rowconfigure(0, weight=1)
         self.cap = Camera()
